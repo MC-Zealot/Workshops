@@ -54,11 +54,11 @@ parser.add_argument(
     '--batch_size', type=int, default=40, help='Number of examples per batch.')
 
 parser.add_argument(
-    '--train_data', type=str, default='/tmp/census_data/adult.data',
+    '--train_data', type=str, default='census_data/adult.data',
     help='Path to the training data.')
 
 parser.add_argument(
-    '--test_data', type=str, default='/tmp/census_data/adult.test',
+    '--test_data', type=str, default='census_data/adult.test',
     help='Path to the test data.')
 
 _NUM_EXAMPLES = {
@@ -202,11 +202,9 @@ def main(unused_argv):
 
   # Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
   for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
-    model.train(input_fn=lambda: input_fn(
-        FLAGS.train_data, FLAGS.epochs_per_eval, True, FLAGS.batch_size))
+    model.train(input_fn=lambda: input_fn(FLAGS.train_data, FLAGS.epochs_per_eval, True, FLAGS.batch_size))
 
-    results = model.evaluate(input_fn=lambda: input_fn(
-        FLAGS.test_data, 1, False, FLAGS.batch_size))
+    results = model.evaluate(input_fn=lambda: input_fn(FLAGS.test_data, 1, False, FLAGS.batch_size))
 
     # Display evaluation metrics
     print('Results at epoch', (n + 1) * FLAGS.epochs_per_eval)
